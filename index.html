@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>前端学习</title>
 </head>
+
 <body>
     <h1>欢迎来到前端学习</h1>
     <p>这是一个简单的HTML页面。</p>
     <p>这是来自新的分支的更改。</p>
     <p>又添加了一个新的修改。</p>
+
+    <h1>绝对定位</h1>
+    <div style="width: 300px; height: 200px; background-color: aqua;">
+        <div style="height: 100px; width: 100px; background-color: brown;"></div>
+        <div style="position: absolute;  left: 30px;  height: 50px; background-color: lightblue;">
+            这是一个绝对定位的元素
+        </div>
+        <div style="height: 100px; width: 100px; background-color: blue;"></div>
+    </div>
+
+    <h1>相对定位示例</h1>
+    <div style="width: 300px; height: 300px; background-color: aqua; position: relative;">
+        <div style="height: 100px; width: 100px; background-color: brown;"></div>
+        <div style="position: relative; top: 20px; left: 30px; height: 50px; background-color: lightblue;">
+            这是一个相对定位的元素
+        </div>
+        <div style="height: 100px; width: 100px; background-color: blue;"></div>
+    </div>
 </body>
+
 </html>
