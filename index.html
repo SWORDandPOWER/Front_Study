@@ -30,6 +30,24 @@
         </div>
         <div style="height: 100px; width: 100px; background-color: blue;"></div>
     </div>
+
+    <!-- DOM操作 -->
+    <div id="box1">
+        <p>这是一个盒子</p>
+    </div>
+    <div class="box2">
+        <p>这是另一个盒子</p>
+    </div>
+
+    <script>
+
+        let box1 = document.getElementById("box1")
+        console.log(box1.innerHTML)
+
+        let box2 = document.getElementsByClassName("box2")
+        console.log(box2[0].textContent)
+
+    </script>
 </body>
 
 </html>
