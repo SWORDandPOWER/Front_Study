@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <script>
+        let time = new Date()
+        console.log(time)
+
+        let data2 = new Date("2025-11-24T10:00:00")  // 我输入什么时间，它就返回什么时间
+        console.log(data2)
+
+        let now = new Date().toISOString()   // 获取当前时间并转为ISO格式,但是返回的是UTC时间，并非当前本地时区的时间
+        console.log(now)
+
+        let now2 = new Date().toLocaleString()   // 获取当前时间并转为ISO格式,且是本地时区时间
+        console.log(now2)
+
+        var time1 = Date.parse("2022-08-08T08:08:08.666Z")  // parse从一个字符串中读取日期，并返回时间戳，前提是这个时间戳是符合ISO格式的
+        console.log(time1)
+
+        /* 自定义时间格式 */
+
+        //先获取基本的时间信息
+        let date = new Date()
+        console.log(date)
+        let year = date.getFullYear()
+        let month = date.getMonth()   //月份从0到11
+        let day = date.getDate()
+        let hours = date.getHours()
+        let minutes = date.getMinutes()
+        let seconds = date.getSeconds()
+
+        console.log(year, month + 1, day, hours, minutes, seconds)
+        console.log(`当前的时间是${year}/${month + 1}/${day}/${hours}/${minutes}/${seconds}`)
+
+    </script>
+</body>
+
+</html>
