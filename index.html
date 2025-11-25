@@ -26,6 +26,14 @@
             text-align: center;
             padding: 5px;
         }
+
+        #box1 {
+            width: 100px;
+            background-color: aqua;
+            height: 100px;
+            /* 超出范围自动添加滚动条 */
+            overflow: auto;
+        }
     </style>
 </head>
 
@@ -34,8 +42,8 @@
     <p>这是一个简单的HTML页面。</p>
 
     <!-- DOM操作 -->
-    <div id="box1" style="background-color: aqua;width: 300px;">
-        <p>这是一个盒子</p>
+    <div id="box1">
+        <p>这是一个盒子。需要一个HTML结构来显示倒计时的时间（小时、分钟、秒），例如使用三个元素来分别显示这三个部分。可能还需要一个按钮来启动和停止倒计时。</p>
     </div>
     <div class="box2" style="background-color: brown;width: 300px;">
         <p>这是另一个盒子</p>
