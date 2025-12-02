@@ -9,6 +9,7 @@
 
 <body>
 
+    <h1>这个页面主要是负责在script进行js的测试与练习</h1>
 
     <script>
         let time = new Date()
@@ -40,6 +41,27 @@
 
         console.log(year, month + 1, day, hours, minutes, seconds)
         console.log(`当前的时间是${year}/${month + 1}/${day}/${hours}/${minutes}/${seconds}`)
+
+
+        console.log("******12.3输出******")
+        let obj = {
+            value: 42,
+            // 普通方法
+            showValue: function () {
+                console.log(this.value);
+            }
+        };
+
+        // 直接调用 showValue 方法，this 正确指向 obj
+        console.log("直接调用:");
+        obj.showValue(); // 输出: 42
+
+
+        // 使用箭头函数解决 this 指向问题
+        console.log("使用箭头函数解决:");
+        setTimeout(() => {
+            obj.showValue(); // 输出: 42，this 正确指向 obj
+        }, 1000);
 
     </script>
 </body>
