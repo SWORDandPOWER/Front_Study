@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <h1>手写apply，bind，call</h1>
+
+    <script>
+
+        function foo(name, age) {
+            console.log("当前的this指向为:\n", this, "\n传递过来的参数为：", name, age);
+        }
+        //这是常规调用apply
+        foo.apply({ obj: "这是需要重新this指向的对象" }, ["chiilee", 26])
+
+        // apply的手写实现
+        // 思路：既然所有的函数都可以调用apply，call，band，那么我们手写的myapply等，也应该要让所有的函数继承，所以手写的myapply应该绑定到Function.prototype
+
+        Function.prototype.myapply = function (thisArg, funArg) {
+            // 传入了一个thisArg，表示这是一个希望通过myapply函数绑定this的对象
+            // 用funArg接收调用myapply的函数的参数
+
+            /* 
+            为了让函数在执行的时候，this指向thisArg，一个容易想到的思路是，我让thisArg调用这个函数。
+            这样由于是thisArg这个对象在调用函数，所以被调用函数在执行时，this自然执行thisArg这个对象（隐式调用规则）
+            最基础的思路如下面两行
+            */
+            // thisArg.fn = this   // 给thisArg新增一个属性，这个属性的value值为this，是哪个函数调用的myapply，this就是哪个函数（假设这个函数是foo）
+            // thisArg.fn()   // 让thisArg调用fn，也就是执行foo函数，这样就是thisArg这个对象在执行foo函数，this就会指向thisAug
+
+            /*
+            确保调用myapply的时候，传进来的thisArg是一个对象类型，如果不是对象类型，就要进行特殊值处理：
+            如果传入的null或者undefined，那么就绑定this到window上，这也是常规apply函数的处理
+            如果传入的是一个基本数据类型，则通过Object()函数转为对象类型
+            如果传入的是一个对象类型，那么通过Object()函数又转为对象类型也不会带来什么问题
+            */
+
+            thisArg = (thisArg === null || thisArg === undefined) ? window : Object(thisArg)
+
+            Object.defineProperty(thisArg, 'fn', {
+                configurable: true,
+                value: this
+            })
+            thisArg.fn(...funArg)  // 利用展开运算符将funArg数组拆开成多个参数，传进fn函数里，而fn函数就是this，而this又就是调用myapply的函数
+
+            delete thisArg.fn
+
+        }
+
+        // call的手写实现，思路和apply是一样的
+        Function.prototype.mycall = function (thisArg, ...funArg) {
+
+            //先做传入对象的类型判断
+            thisArg = (thisArg === null || thisArg === undefined) ? window : Object(thisArg)
+
+            Object.defineProperty(thisArg, 'fn', {
+                configurable: true,
+                value: this
+            })
+            thisArg.fn(...funArg)
+
+            delete thisArg.fn
+        }
+
+        // 调用myapply,将希望绑定的对象传入，同时将调用myapply的函数的参数以数组的形式传入
+        foo.myapply({ obj: "这是需要重新this指向的对象" }, ["chiilee", 24])
+
+        // 调用mycall，将希望绑定的对象传入，同时将调用myapply的函数的参数以参数列表的形式传入
+        foo.mycall({ obj: "这是需要重新this指向的对象" }, "chiilee", 25)
+
+
+        // 手写实现bind
+        /* 思路：依然是在Function的prototype上绑定一个自定义的bind——mybind，然后让这个myband返回一个函数
+        */
+        Function.prototype.myband = function (thisArg, ...otherArg) {
+
+            thisArg = thisArg === null || thisArg === undefined ? window : Object(thisArg)
+
+            Object.defineProperty(thisArg, 'fn', {
+                value: this  // 这里的this就是foo对象
+            })
+
+            return function (...funArg) {
+                let allArg = [...otherArg, ...funArg]
+                thisArg.fn(...allArg)   // 这里相当于让传入的obj调用foo(),但是前提是thisAvg必须要有这个属性
+            }
+        }
+
+        const newFoo = foo.myband({ obj: "这是需要重新this指向的对象" }, "chiilee")    // foo调用自定义的band，然后由newFoo接收返回回来的新函数
+        newFoo(23)
+
+
+    </script>
+</body>
+
+</html>

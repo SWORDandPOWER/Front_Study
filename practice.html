@@ -42,26 +42,22 @@
         console.log(year, month + 1, day, hours, minutes, seconds)
         console.log(`当前的时间是${year}/${month + 1}/${day}/${hours}/${minutes}/${seconds}`)
 
+        console.log("**********12.10测试*********");
+        var n = 100; // 全局变量
 
-        console.log("******12.3输出******")
-        let obj = {
-            value: 42,
-            // 普通方法
-            showValue: function () {
-                console.log(this.value);
-            }
-        };
+        function foo1() {
+            console.log(n); // 2. 输出100
+        }
 
-        // 直接调用 showValue 方法，this 正确指向 obj
-        console.log("直接调用:");
-        obj.showValue(); // 输出: 42
+        function foo2() {
+            var n = 200; // 局部变量，函数foo2内有效
+            console.log(n); // 1. 输出200
+            foo1();
+        }
 
+        foo2(); // 调用foo2函数
+        console.log(n); // 3. 输出100
 
-        // 使用箭头函数解决 this 指向问题
-        console.log("使用箭头函数解决:");
-        setTimeout(() => {
-            obj.showValue(); // 输出: 42，this 正确指向 obj
-        }, 1000);
 
     </script>
 </body>
